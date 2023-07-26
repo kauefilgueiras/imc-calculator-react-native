@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Text, TextInput, View, TouchableOpacity } from "react-native";
-import ResultImc from "./ResultImc";
-import styles from "./style";
+import { Button, Text, TextInput, View } from "react-native";
+import ResultImc from "expo/AppEntry";
 
 export default function Form() {
     // Inicializa o estado da altura, peso, mensagem do IMC, valor do IMC e texto do botão.
@@ -24,7 +23,7 @@ export default function Form() {
             setHeight("")
             setWeight("")
             // Altera a mensagem do IMC para mostrar o valor calculado do IMC.
-            setMessageImc(`Seu IMC é igual:`)
+            setMessageImc(`Seu IMC é igual: ${resultImc}`)
             // Altera o texto do botão para "Calcular novamente".
             setTextButton("Calcular novamente")
             return
@@ -38,37 +37,32 @@ export default function Form() {
     }
 
     return (
-        <View style={styles.formContext}>
-            <View style={styles.form}>
-                <Text style={styles.formLabel}>Altura</Text>
+        <View>
+            <View>
+                <Text>Altura</Text>
                 <TextInput
-                    style={styles.input}
                     onChangeText={setHeight}
                     value={height}
                     placeholder="Digite sua altura"
                     keyboardType="numeric"
                 />
 
-                <Text style={styles.formLabel}>Peso</Text>
+                <Text>Peso</Text>
                 <TextInput
-                    style={styles.input}
                     onChangeText={setWeight}
                     value={weight}
                     placeholder="Digite seu peso"
                     keyboardType="numeric"
                 />
-                <TouchableOpacity
-                    style={styles.buttonCalculator}
+                <Button
+                    title={textButton}
                     onPress={validationImc}
-
-                >
-                    <Text style={styles.textButtonCalculator}>{textButton}</Text>
-                </TouchableOpacity>
-                <ResultImc
-                    messageResultImc={messageImc}
-                    contextImc={imc}
                 />
             </View>
+            <ResultImc
+                messageResultImc={messageImc}
+                resultImc={imc}
+            />
         </View>
     );
 }
